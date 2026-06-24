@@ -39,12 +39,6 @@ vim.opt.splitbelow = true
 vim.keymap.set("n", "<leader>v", "<cmd>vsp<CR>", { desc = "Vertical split" })
 vim.keymap.set("n", "<leader>h", "<cmd>sp<CR>", { desc = "Horizontal split" })
 
--- Navigating between splits (the classic)
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left split" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right split" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to lower split" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to upper split" })
-
 -- Resizing
 vim.keymap.set("n", "<C-Left>", "<C-w><", { desc = "Shrink split width" })
 vim.keymap.set("n", "<C-Right>", "<C-w>>", { desc = "Expand split width" })
