@@ -10,6 +10,13 @@ return {
 				python = { "ruff" },
 				typescript = { "prettier" },
 				javascript = { "prettier" },
+				rust = { "rustfmt" },
+			},
+			formatters = {
+				rustfmt = {
+					command = "cargo",
+					args = { "fmt", "--" },
+				},
 			},
 			format_on_save = {
 				timeout_ms = 500,

@@ -2,8 +2,8 @@ return {
 	"akinsho/toggleterm.nvim",
 	version = "*",
 	opts = {
-		open_mapping = [[<c-/>]],
-		direction = "horizontal", -- or "vertical", "float", "tab"
+		open_mapping = { [[<c-\>]], [[<c-_>]] },
+		direction = "horizontal",
 		size = 15,
 	},
 }
