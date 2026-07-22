@@ -10,6 +10,8 @@ return {
 				python = { "ruff" },
 				typescript = { "prettier" },
 				javascript = { "prettier" },
+				typescriptreact = { "prettier" },
+				javascriptreact = { "prettier" },
 				rust = { "rustfmt" },
 			},
 			format_on_save = {

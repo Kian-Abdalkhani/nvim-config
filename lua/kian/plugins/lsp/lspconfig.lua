@@ -120,8 +120,19 @@ return {
 				},
 			},
 		})
+		-- ─── HTML LSP  ───────────────────────────────────────────
+		vim.lsp.config.emmet_language_server = {
+			cmd = { "emmet-language-server", "--stdio" },
+			filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
+			init_options = {
+				includeLanguages = {},
+				excludeLanguages = {},
+				showAbbreviationSuggestions = true,
+				showExpandedAbbreviation = "always",
+			},
+		}
 
 		-- Enable all configured servers
-		vim.lsp.enable({ "lua_ls", "gopls", "basedpyright", "ts_ls", "eslint", "tailwindcss" })
+		vim.lsp.enable({ "lua_ls", "gopls", "basedpyright", "ts_ls", "eslint", "tailwindcss", "emmet_language_server" })
 	end,
 }

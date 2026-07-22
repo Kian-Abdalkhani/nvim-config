@@ -20,6 +20,7 @@ return {
 			"go",
 			"python",
 			"typescript",
+			"tsx",
 			"javascript",
 			"bash",
 			"json",
