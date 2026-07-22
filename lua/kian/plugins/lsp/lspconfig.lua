@@ -54,7 +54,74 @@ return {
 			capabilities = capabilities,
 		})
 
+		-- ─── TypeScript ─────────────────────────────────────────────
+		vim.lsp.config("ts_ls", {
+			capabilities = capabilities,
+			filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+			settings = {
+				typescript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayFunctionResultTypeHints = true,
+					},
+				},
+				javascript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+					},
+				},
+			},
+		})
+		-- ─── ESLint ─────────────────────────────────────────────────
+		vim.lsp.config("eslint", {
+			capabilities = capabilities,
+			settings = {
+				workingDirectories = { mode = "auto" },
+			},
+			on_attach = function(client, bufnr)
+				-- auto-fix on save
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					buffer = bufnr,
+					callback = function()
+						local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "eslint" })
+						if #clients == 0 then
+							return
+						end
+						pcall(vim.cmd, "EslintFixAll")
+					end,
+				})
+			end,
+		})
+		-- ─── Tailwind CSS ───────────────────────────────────────────
+		vim.lsp.config("tailwindcss", {
+			capabilities = capabilities,
+			filetypes = { "typescriptreact", "javascriptreact", "html", "css" },
+			root_dir = function(bufnr, on_dir)
+				local util = require("lspconfig.util")
+				local root = util.root_pattern(
+					"tailwind.config.js",
+					"tailwind.config.ts",
+					"tailwind.config.cjs",
+					"tailwind.config.mjs",
+					"postcss.config.js",
+					"postcss.config.cjs",
+					"package.json"
+				)(vim.api.nvim_buf_get_name(bufnr))
+				on_dir(root)
+			end,
+			settings = {
+				tailwindCSS = {
+					experimental = {
+						classRegex = {
+							{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+							{ "cx\\(([^)]*)\\)", "[\"'`]([^\"'`]*)[\"'`]" },
+						},
+					},
+				},
+			},
+		})
+
 		-- Enable all configured servers
-		vim.lsp.enable({ "lua_ls", "gopls", "basedpyright" })
+		vim.lsp.enable({ "lua_ls", "gopls", "basedpyright", "ts_ls", "eslint", "tailwindcss" })
 	end,
 }
