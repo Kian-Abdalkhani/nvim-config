@@ -6,15 +6,18 @@ return {
 		require("nvim-treesitter").update()
 	end,
 	init = function()
-		-- Enable highlighting and indentation on every filetype
+		local treesitter_group = vim.api.nvim_create_augroup("kian-treesitter", { clear = true })
 		vim.api.nvim_create_autocmd("FileType", {
+			desc = "Enable Tree-sitter highlighting and indentation",
+			group = treesitter_group,
 			callback = function()
-				pcall(vim.treesitter.start)
-				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				local started = pcall(vim.treesitter.start)
+				if started then
+					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end
 			end,
 		})
 
-		-- Install parsers that aren't already present
 		local ensure_installed = {
 			"lua",
 			"go",

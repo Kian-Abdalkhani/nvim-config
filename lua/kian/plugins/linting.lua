@@ -8,12 +8,12 @@ return {
 			lua = { "luacheck" },
 			go = { "golangcilint" },
 			python = { "ruff" },
-			typescript = { "eslint_d" },
-			javascript = { "eslint_d" },
 		}
 
-		-- Trigger linting on these events
+		local lint_group = vim.api.nvim_create_augroup("kian-lint", { clear = true })
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+			desc = "Lint current buffer",
+			group = lint_group,
 			callback = function()
 				lint.try_lint()
 			end,

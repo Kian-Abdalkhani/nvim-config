@@ -5,17 +5,14 @@ return {
 		"hrsh7th/cmp-nvim-lsp", -- LSP source
 		"hrsh7th/cmp-buffer", -- buffer words source
 		"hrsh7th/cmp-path", -- filesystem paths source
-		"L3MON4D3/LuaSnip", -- snippet engine (required by cmp)
-		"saadparwaiz1/cmp_luasnip", -- snippet source
 	},
 	config = function()
 		local cmp = require("cmp")
-		local luasnip = require("luasnip")
 
 		cmp.setup({
 			snippet = {
 				expand = function(args)
-					luasnip.lsp_expand(args.body)
+					vim.snippet.expand(args.body)
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
@@ -29,7 +26,6 @@ return {
 			}),
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
 				{ name = "buffer" },
 				{ name = "path" },
 			}),
