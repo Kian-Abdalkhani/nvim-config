@@ -8,17 +8,8 @@ return {
 		ft = { "sql", "mysql", "plsql" },
 		dependencies = {
 			"tpope/vim-dadbod",
-			"hrsh7th/nvim-cmp",
+			"saghen/blink.cmp",
 		},
-		config = function()
-			local cmp = require("cmp")
-			cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
-				sources = cmp.config.sources({
-					{ name = "vim-dadbod-completion" },
-					{ name = "buffer" },
-				}),
-			})
-		end,
 	},
 	{
 		"kristijanhusak/vim-dadbod-ui",

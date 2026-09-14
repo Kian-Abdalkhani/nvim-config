@@ -1,34 +1,38 @@
 return {
-	"hrsh7th/nvim-cmp",
-	event = { "InsertEnter" },
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp", -- LSP source
-		"hrsh7th/cmp-buffer", -- buffer words source
-		"hrsh7th/cmp-path", -- filesystem paths source
-	},
-	config = function()
-		local cmp = require("cmp")
-
-		cmp.setup({
-			snippet = {
-				expand = function(args)
-					vim.snippet.expand(args.body)
-				end,
+	"saghen/blink.cmp",
+	version = "1.*",
+	event = "InsertEnter",
+	opts = {
+		keymap = {
+			preset = "none",
+			["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+			["<C-e>"] = { "hide", "fallback" },
+			["<C-j>"] = { "select_next", "fallback" },
+			["<C-k>"] = { "select_prev", "fallback" },
+			["<C-b>"] = { "scroll_documentation_up", "fallback" },
+			["<C-f>"] = { "scroll_documentation_down", "fallback" },
+			["<C-y>"] = { "select_and_accept", "fallback" },
+			["<CR>"] = { "accept", "fallback" },
+			["<Tab>"] = { "snippet_forward", "fallback" },
+			["<S-Tab>"] = { "snippet_backward", "fallback" },
+			["<C-s>"] = { "show_signature", "hide_signature", "fallback" },
+		},
+		completion = {
+			documentation = { auto_show = true, auto_show_delay_ms = 300 },
+		},
+		signature = { enabled = true },
+		sources = {
+			default = { "lsp", "path", "snippets", "buffer" },
+			per_filetype = {
+				sql = { inherit_defaults = true, "dadbod" },
+				mysql = { inherit_defaults = true, "dadbod" },
+				plsql = { inherit_defaults = true, "dadbod" },
 			},
-			mapping = cmp.mapping.preset.insert({
-				["<C-k>"] = cmp.mapping.select_prev_item(),
-				["<C-j>"] = cmp.mapping.select_next_item(),
-				["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				["<C-f>"] = cmp.mapping.scroll_docs(4),
-				["<C-Space>"] = cmp.mapping.complete(),
-				["<C-e>"] = cmp.mapping.abort(),
-				["<CR>"] = cmp.mapping.confirm({ select = false }),
-			}),
-			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "buffer" },
-				{ name = "path" },
-			}),
-		})
-	end,
+			providers = {
+				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+			},
+		},
+		fuzzy = { implementation = "prefer_rust" },
+	},
+	opts_extend = { "sources.default" },
 }
