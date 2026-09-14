@@ -38,3 +38,37 @@ Mason installs the configured Lua, Go, Python, TypeScript/JavaScript, Tailwind,
 and Emmet language servers, along with the corresponding formatters, linters, and
 debug adapters. `rustfmt` remains part of the external Rust toolchain because it
 is not distributed through Mason.
+
+## Everyday key bindings
+
+### Completion
+
+- `<C-Space>` opens completion or its documentation.
+- `<C-j>` and `<C-k>` select the next and previous completion.
+- `<CR>` accepts the selected completion; `<C-y>` selects and accepts the first
+  item when needed.
+- `<C-b>` and `<C-f>` scroll documentation.
+- `<Tab>` and `<S-Tab>` move through snippet placeholders.
+- `<C-s>` toggles signature help and `<C-e>` closes completion.
+
+### Files and diagnostics
+
+- `-` or `<leader>pv` opens Oil at the current file's directory. Edit names and
+  paths like text, then write the buffer to apply filesystem changes.
+- `<leader>xx` opens workspace diagnostics and `<leader>xX` opens diagnostics for
+  the current buffer.
+- `<leader>cs` shows document symbols and `<leader>cl` shows LSP locations.
+- `<leader>xL` and `<leader>xQ` show the location and quickfix lists.
+- `<leader>fn` opens Fidget's notification history.
+
+### Git
+
+- `]h` and `[h` move between changed hunks.
+- `<leader>gs` stages a hunk and `<leader>gr` resets it; both work on visual
+  selections. `<leader>gS` and `<leader>gR` apply to the entire buffer.
+- `<leader>gp` previews a hunk, `<leader>gb` shows line blame, and `<leader>gd`
+  diffs the buffer.
+- `<leader>gt` toggles current-line blame and `<leader>gw` toggles word diff.
+- `<leader>gg` opens Neogit.
+
+`<C-a>` is intentionally left unmapped for tmux.
