@@ -45,6 +45,8 @@ is not distributed through Mason.
 
 ## Everyday key bindings
 
+See the [shortcut cheat sheet](KEYMAPS.md) for the complete quick reference.
+
 ### Completion
 
 - `<C-Space>` opens completion or its documentation.
