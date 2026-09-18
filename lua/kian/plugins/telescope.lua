@@ -25,5 +25,12 @@ return {
 			end,
 			desc = "Grep for text",
 		},
+		{
+			"<leader>fg",
+			function()
+				require("telescope.builtin").live_grep()
+			end,
+			desc = "Live grep",
+		},
 	},
 }

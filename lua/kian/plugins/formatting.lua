@@ -11,6 +11,12 @@ return {
 			javascript = { "prettier" },
 			typescriptreact = { "prettier" },
 			javascriptreact = { "prettier" },
+			html = { "prettier" },
+			css = { "prettier" },
+			json = { "prettier" },
+			jsonc = { "prettier" },
+			yaml = { "prettier" },
+			markdown = { "prettier" },
 			rust = { "rustfmt" },
 		},
 		format_on_save = {

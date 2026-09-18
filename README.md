@@ -15,6 +15,10 @@ the configured language tools.
 - A Rust toolchain with `rustfmt` for Rust formatting
 - A Nerd Font for the configured UI icons
 
+Neotest uses the test runner from each project: Python needs pytest or unittest,
+Go needs the Go toolchain, Rust needs Cargo, and JavaScript/TypeScript projects
+need Jest or Vitest installed locally.
+
 Database command-line clients are optional and only needed for the databases used
 through vim-dadbod.
 
@@ -55,11 +59,24 @@ is not distributed through Mason.
 
 - `-` or `<leader>pv` opens Oil at the current file's directory. Edit names and
   paths like text, then write the buffer to apply filesystem changes.
+- `<leader>fg` searches project text live as you type.
 - `<leader>xx` opens workspace diagnostics and `<leader>xX` opens diagnostics for
   the current buffer.
 - `<leader>cs` shows document symbols and `<leader>cl` shows LSP locations.
 - `<leader>xL` and `<leader>xQ` show the location and quickfix lists.
 - `<leader>fn` opens Fidget's notification history.
+
+### Editing and code navigation
+
+- Surround text with `ys{motion}{char}` (for example, `ysiw)`), remove a pair
+  with `ds{char}`, or change one with `cs{old}{new}`.
+- `am`/`im`, `ac`/`ic`, and `aa`/`ia` select around/inside a function, class,
+  or parameter in visual mode or after an operator. In normal mode, use `dam`
+  to delete a function or `yim` to yank its body; typing `am` or `im` alone
+  starts Insert mode. In visual mode, press `v` before `am` or `im`.
+- `<leader>mn` and `<leader>mp` jump to the next and previous function.
+- `<leader>ms` and `<leader>mS` swap the current parameter with its next or
+  previous neighbor.
 
 ### Git
 
@@ -72,3 +89,9 @@ is not distributed through Mason.
 - `<leader>gg` opens Neogit.
 
 `<C-a>` is intentionally left unmapped for tmux.
+
+### Tests
+
+- `<leader>tn` runs the nearest test; `<leader>tf` runs the current test file.
+- `<leader>tl` reruns the last test; `<leader>td` debugs the nearest test with DAP.
+- `<leader>ts` toggles the test summary; `<leader>to` shows test output.
