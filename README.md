@@ -7,7 +7,7 @@ the configured language tools.
 
 ## Requirements
 
-- Neovim 0.11 or newer (0.12 is recommended)
+- Neovim 0.11.2 or newer (0.12 is recommended)
 - Git
 - ripgrep for Telescope text search
 - Node.js for the TypeScript, ESLint, Tailwind, Emmet, and JavaScript debug tools
@@ -21,6 +21,10 @@ need Jest or Vitest installed locally.
 
 Database command-line clients are optional and only needed for the databases used
 through vim-dadbod.
+
+For AI coding, install and authenticate the Claude Code and/or Codex CLI on the
+machine running Neovim. Install tmux for persistent AI terminal sessions; without
+it, Sidekick uses a native Neovim terminal.
 
 ## Install
 
@@ -91,6 +95,35 @@ See the [shortcut cheat sheet](KEYMAPS.md) for the complete quick reference.
 - `<leader>gg` opens Neogit.
 
 `<C-a>` is intentionally left unmapped for tmux.
+
+### AI coding agents
+
+[Sidekick](https://github.com/folke/sidekick.nvim) opens the agent TUI in a
+right-hand Neovim split. When tmux is installed, the split attaches to a persistent
+tmux session, so hiding the terminal or quitting Neovim leaves the agent running.
+Use `<leader>is` to select or reconnect to a session. Without tmux, quitting Neovim
+ends its agent terminal.
+
+- `<leader>ic` opens or toggles Claude Code; `<leader>ix` does the same for Codex.
+- `<leader>ii` toggles an AI terminal; if several sessions are attached, choose one.
+- `<leader>if` inserts the current file reference into an agent prompt.
+- `<leader>iv` sends a Visual selection; `<leader>ip` opens the prompt menu in
+  Normal or Visual mode. Review the inserted context and press Enter in the agent
+  to submit it. If several sessions are attached, Sidekick asks which one to use.
+- Inside the AI terminal, `<C-z>` returns to the editor without hiding it,
+  `<C-.>` hides it if supported by your terminal, and `<C-q>` enters Normal mode.
+  In Normal mode, `q` hides it. `<leader>id` detaches the selected session; with
+  tmux, it remains available to reconnect.
+
+Sidekick reloads externally changed files when their buffers have no unsaved
+edits. Review repository changes with `<leader>gg` (Neogit), then
+`:DiffviewOpen HEAD` for a project diff; `:DiffviewRefresh` refreshes the changed
+file list. Existing Gitsigns shortcuts still work for individual files.
+
+Copilot Next Edit Suggestions and Copilot status tracking are disabled; the AI
+CLI workflow does not need Copilot. `:checkhealth sidekick` still checks Copilot
+and may report a missing Copilot LSP server; that section is unrelated to this
+CLI-only setup. The AI CLI sections check tmux and installed agent executables.
 
 ### Tests
 

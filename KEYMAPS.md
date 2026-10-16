@@ -78,6 +78,25 @@ These are Blink mappings. Autopairs and tag closing work automatically while typ
 | `<leader>gt`, `<leader>gw` | Toggle line blame/word diff | Gitsigns |
 | `<leader>gg` | Open Git interface | Neogit |
 
+## AI coding agents
+
+| Shortcut | Action | Plugin |
+| --- | --- | --- |
+| `<leader>ic`, `<leader>ix` | Open/toggle Claude Code or Codex | Sidekick |
+| `<leader>ii` | Toggle an AI terminal; choose if several are attached | Sidekick |
+| `<leader>is` | Select an installed agent or reconnect to a session | Sidekick |
+| `<leader>if` | Insert the current file reference into an agent prompt | Sidekick |
+| `<leader>iv` (Visual) | Insert the selection into an agent prompt | Sidekick |
+| `<leader>ip` (Normal/Visual) | Choose a prompt, including diagnostics and code review | Sidekick |
+| `<leader>id` | Detach an AI session; tmux keeps it running | Sidekick |
+
+Context is inserted without submitting; press Enter in the agent to send it.
+When multiple sessions are attached, choose the recipient. Inside an AI terminal,
+`<C-z>` returns to the editor, `<C-q>` enters Normal mode, and Normal-mode `q`
+hides the split. With tmux installed, sessions survive hiding or quitting Neovim;
+otherwise the native terminal ends when Neovim exits. Copilot suggestions are
+disabled, and existing Harpoon and completion mappings are unchanged.
+
 ## Tests and debugging
 
 | Shortcut | Action | Plugin |
