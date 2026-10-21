@@ -4,6 +4,10 @@ return {
 		lazy = false,
 		build = ":MasonUpdate",
 		opts = {
+			registries = {
+				"lua:kian.mason_registry",
+				"github:mason-org/mason-registry",
+			},
 			ui = {
 				icons = {
 					package_installed = "✓",
@@ -28,6 +32,7 @@ return {
 				"eslint-lsp",
 				"tailwindcss-language-server",
 				"emmet-language-server",
+				"sqls",
 
 				-- Formatters and linters
 				"stylua",
@@ -35,8 +40,9 @@ return {
 				"gofumpt",
 				"ruff",
 				"prettier",
-				"luacheck",
+				{ "luacheck", version = "1.2.0" },
 				"golangci-lint",
+				"sqlfluff",
 
 				-- Debug adapters
 				"debugpy",

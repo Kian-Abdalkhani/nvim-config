@@ -29,7 +29,18 @@ return {
 				plsql = { inherit_defaults = true, "dadbod" },
 			},
 			providers = {
-				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+				dadbod = {
+					name = "Dadbod",
+					module = "vim_dadbod_completion.blink",
+					enabled = function()
+						for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0, name = "sqls" })) do
+							if client:supports_method("textDocument/completion", 0) then
+								return false
+							end
+						end
+						return true
+					end,
+				},
 			},
 		},
 		fuzzy = { implementation = "prefer_rust" },

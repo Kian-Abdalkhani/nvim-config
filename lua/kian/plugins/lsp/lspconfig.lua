@@ -28,7 +28,16 @@ return {
 			end,
 		})
 
-		local servers = { "lua_ls", "gopls", "basedpyright", "ts_ls", "eslint", "tailwindcss", "emmet_language_server" }
+		local servers = {
+			"lua_ls",
+			"gopls",
+			"basedpyright",
+			"ts_ls",
+			"eslint",
+			"tailwindcss",
+			"emmet_language_server",
+			"sqls",
+		}
 		for _, server in ipairs(servers) do
 			local config = require("kian.lsp.servers." .. server)
 			config.capabilities = capabilities

@@ -66,6 +66,42 @@ LSP shortcuts are available only when a language server attaches to the buffer.
 
 These are Blink mappings. Autopairs and tag closing work automatically while typing.
 
+## SQL commands
+
+| Command | Action |
+| --- | --- |
+| `:SQLDialect postgres`, `:SQLDialect sqlite` | Select a buffer dialect, including standalone SQL files |
+| `:SQLDialect clear` | Remove the buffer override and use project settings |
+| `:SQLFormat` | Format the current SQL buffer asynchronously |
+| `:SQLLint` | Run SQLFluff diagnostics for the current SQL buffer |
+| `:SQLTables` | Search the current file's table outline with source previews |
+| `:SQLColumns [table]` | List columns for the current or named table, or all columns |
+| `:SQLDefinition` | Follow a schema declaration or foreign-key identifier |
+| `:SQLReferences [table]` | List incoming foreign-key references to a table or column |
+| `:SQLRelations [table]` | Browse incoming and outgoing foreign keys |
+| `:SQLSchemaIssues` | Show parse problems and partial-index limitations |
+| `:SQLSchemaRefresh` | Rebuild the current buffer's offline schema index |
+| `:ConformInfo` | Inspect formatter availability |
+| `:DBUI`, `:DBUIToggle` | Open or toggle Dadbod's database UI |
+| `:DBUIAddConnection` | Add a database connection |
+| `:%DB` | Execute the current buffer against its selected database |
+| `:'<,'>DB` (Visual range) | Execute the selected SQL |
+
+SQL formatting runs on save once a dialect is configured, and SQL linting runs
+on opening and saving files. Project `.sqlfluff` settings select `postgres` or
+`sqlite`; use `:SQLDialect` for a buffer override. Schema completion uses the
+development database selected in the project's `.sqls.yml`; Dadbod has its
+own connection selection. See [SQL setup](README.md#postgresql-and-sqlite).
+In a Dadbod result window, `R` reruns the query and `gq` closes the result.
+
+Offline schema navigation uses the selected PostgreSQL or SQLite dialect and the
+current buffer, including unsaved edits. It needs no database connection. The
+first navigation command activates an index that refreshes after edits. Existing
+LSP keymaps are unchanged. In `:SQLRelations`, selecting an outgoing relationship
+jumps to its target, while an incoming relationship jumps to its source reference.
+Inspect `:SQLSchemaIssues` when the index reports partial coverage. See
+[offline schema analysis](README.md#offline-schema-analysis).
+
 ## Git
 
 | Shortcut | Action | Plugin |
@@ -110,7 +146,6 @@ disabled, and existing Harpoon and completion mappings are unchanged.
 
 ## Plugins without a configured shortcut
 
-- `:DBUI` opens Dadbod's database UI; `:DBUIToggle` toggles it.
 - `:Lazy` opens the plugin manager; `:Mason` manages language tools.
 - `:ConformInfo` shows formatter status. Formatting and linting run automatically.
 - Tree-sitter highlighting, Todo comments, Rose Pine, Lualine, Rust support,
