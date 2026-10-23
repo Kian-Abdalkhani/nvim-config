@@ -7,6 +7,10 @@ return {
 		styles = {
 			transparency = true,
 		},
+		highlight_groups = {
+			BlinkCmpSignatureHelp = { bg = "surface" },
+			BlinkCmpSignatureHelpBorder = { fg = "muted", bg = "surface" },
+		},
 	},
 	config = function(_, opts)
 		require("rose-pine").setup(opts)

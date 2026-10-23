@@ -20,7 +20,10 @@ return {
 		completion = {
 			documentation = { auto_show = true, auto_show_delay_ms = 300 },
 		},
-		signature = { enabled = true },
+		signature = {
+			enabled = true,
+			window = { border = "rounded" },
+		},
 		sources = {
 			default = { "lsp", "path", "snippets", "buffer" },
 			per_filetype = {
