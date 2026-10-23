@@ -7,14 +7,15 @@ the configured language tools.
 
 ## Requirements
 
-- Neovim 0.11.2 or newer (0.12 is recommended)
+- Neovim 0.12.0 or newer
 - Git
 - ripgrep for Telescope text search
 - Node.js for the TypeScript, ESLint, Tailwind, Emmet, and JavaScript debug tools
 - Python 3 for SQLFluff and Python tooling
 - A Go toolchain for SQLs installation
 - LuaRocks and Lua 5.4 with development headers for Mason's LuaCheck installation
-- A C compiler for Tree-sitter parsers when a prebuilt parser is unavailable
+- `tree-sitter-cli` 0.26.1 or newer, installed through a system package manager rather than npm
+- A C compiler, `tar`, and `curl` for building Tree-sitter parsers
 - A Rust toolchain with `rustfmt` for Rust formatting
 - A Nerd Font for the configured UI icons
 
@@ -49,6 +50,10 @@ Mason installs the configured Lua, Go, Python, TypeScript/JavaScript, Tailwind,
 Emmet, and SQL language servers, along with the corresponding formatters, linters,
 and debug adapters. SQL uses `sqls` and SQLFluff. `rustfmt` remains part of the
 external Rust toolchain because it is not distributed through Mason.
+
+JavaScript and TypeScript display parameter and configured return-type inlay hints
+automatically when their language server attaches. Go linting uses the current
+file's module or workspace root, including when Neovim was started elsewhere.
 
 LuaCheck uses a small local Mason recipe that installs version 1.2.0 with Lua 5.4;
 Lua 5.5 rejects assignments to loop variables in LuaCheck's current releases.
@@ -230,6 +235,9 @@ See the [shortcut cheat sheet](KEYMAPS.md) for the complete quick reference.
 - `<leader>xL` and `<leader>xQ` show the location and quickfix lists.
 - `<leader>fn` opens Fidget's notification history.
 
+Fidget captures ordinary notifications from startup and retains completed LSP
+progress in its history.
+
 ### Editing and code navigation
 
 - Surround text with `ys{motion}{char}` (for example, `ysiw)`), remove a pair
@@ -288,3 +296,23 @@ CLI-only setup. The AI CLI sections check tmux and installed agent executables.
 - `<leader>tn` runs the nearest test; `<leader>tf` runs the current test file.
 - `<leader>tl` reruns the last test; `<leader>td` debugs the nearest test with DAP.
 - `<leader>ts` toggles the test summary; `<leader>to` shows test output.
+
+## Configuration verification
+
+With the configured plugins and Mason tools installed, run these focused checks
+from the configuration directory:
+
+```sh
+nvim --headless -u NONE -i NONE -l tests/javascript_dap.lua
+nvim --headless -u NONE -i NONE -l tests/go_lint.lua
+nvim --headless -u NONE -i NONE -n -l tests/notification_history.lua
+nvim --headless -i NONE -u tests/sql_schema_init.lua "+lua dofile('tests/typescript_inlay_hints.lua')" +qa!
+```
+
+These check native JavaScript debug-adapter connections and child sessions with
+simulated sockets, real Go linting from outside a project, startup notifications
+and completed LSP progress history, and real TypeScript/JavaScript inlay hints and
+navigation. They use temporary fixtures and disable plugin installation and
+update checks. Go linting checks use the managed golangci-lint 2.x and disable
+network downloads. The SQL checks are documented under
+[offline schema indexing](#verify-offline-schema-indexing).

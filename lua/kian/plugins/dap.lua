@@ -7,7 +7,6 @@ return {
 			"theHamsta/nvim-dap-virtual-text",
 			"mfussenegger/nvim-dap-python",
 			"leoluz/nvim-dap-go",
-			"mxsdev/nvim-dap-vscode-js",
 		},
 		keys = {
 			{

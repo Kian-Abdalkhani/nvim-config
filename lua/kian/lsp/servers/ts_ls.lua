@@ -4,7 +4,7 @@ return {
 		typescript = {
 			inlayHints = {
 				includeInlayParameterNameHints = "all",
-				includeInlayFunctionResultTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
 			},
 		},
 		javascript = {

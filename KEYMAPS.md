@@ -52,6 +52,8 @@ structure are required.
 | `<leader>fn` | Notification history | Fidget |
 
 LSP shortcuts are available only when a language server attaches to the buffer.
+JavaScript and TypeScript inlay hints appear automatically when their server attaches.
+Notification history includes ordinary notifications and completed LSP progress.
 
 ### Completion (Insert mode)
 

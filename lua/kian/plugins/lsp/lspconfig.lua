@@ -10,6 +10,11 @@ return {
 			desc = "Configure LSP keymaps",
 			group = lsp_group,
 			callback = function(args)
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				if client and client.name == "ts_ls" and client:supports_method("textDocument/inlayHint", args.buf) then
+					vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+				end
+
 				local function map(lhs, rhs, desc)
 					vim.keymap.set("n", lhs, rhs, { buffer = args.buf, silent = true, desc = desc })
 				end
