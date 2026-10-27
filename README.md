@@ -64,6 +64,18 @@ unchanged. LuaCheck remains installed and managed through Mason.
 The repository's `.luacheckrc` selects LuaJIT and recognizes Neovim's `vim` global;
 other Lua projects retain their own LuaCheck settings.
 
+## Markdown
+
+Opening a Markdown file automatically enables
+[render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim).
+Headings, lists, tables, checkboxes, and code blocks render directly in Neovim,
+while the Markdown source remains editable. Basic rendering uses the existing
+Markdown Tree-sitter parsers and UI icons; no additional command-line tool is
+needed.
+
+Use `:RenderMarkdown toggle` to switch rendering on or off, or
+`:RenderMarkdown enable` and `:RenderMarkdown disable` to select it explicitly.
+
 ## PostgreSQL and SQLite
 
 SQL files use Tree-sitter highlighting and indentation, Blink completion, SQLFluff

@@ -39,6 +39,17 @@ function, `yim` yanks its body, and `vam` selects a function. Typing `am` alone
 in Normal mode enters Insert mode. A matching Tree-sitter parser and code
 structure are required.
 
+## Markdown commands
+
+| Command | Action |
+| --- | --- |
+| `:RenderMarkdown toggle` | Toggle Markdown rendering |
+| `:RenderMarkdown enable` | Enable Markdown rendering |
+| `:RenderMarkdown disable` | Disable Markdown rendering |
+
+Rendering starts automatically when opening a Markdown file. See
+[Markdown setup](README.md#markdown).
+
 ## Code intelligence and diagnostics
 
 | Shortcut | Action | Plugin |
