@@ -79,6 +79,20 @@ Notification history includes ordinary notifications and completed LSP progress.
 
 These are Blink mappings. Autopairs and tag closing work automatically while typing.
 
+## Swift commands
+
+| Command | Action |
+| --- | --- |
+| `:SwiftBuild`, `:SwiftRun [product]` | Build a Swift package or run an executable. Run also handles standalone scripts. |
+| `:SwiftTest [filter]` | Run the package suite or matching tests. |
+| `:SwiftDebug [product]` | Build and debug a package executable. |
+| `:XcodebuildSetup`, `:XcodebuildPicker` | Select an app project, scheme and destination, or browse app actions. |
+| `:XcodebuildBuild`, `:XcodebuildBuildRun`, `:XcodebuildBuildDebug` | Build, run or debug an Apple app on the selected Mac or simulator. |
+| `:XcodebuildTestNearest`, `:XcodebuildTest` | Run the current app test or the full test plan. |
+
+Use the existing DAP keys to set breakpoints, continue and step. See the
+[Swift setup guide](README.md#swift) for toolchain and simulator setup.
+
 ## SQL commands
 
 | Command | Action |

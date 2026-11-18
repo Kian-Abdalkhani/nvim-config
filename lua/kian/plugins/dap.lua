@@ -63,7 +63,7 @@ return {
 			local dap = require("dap")
 			local dapui = require("dapui")
 
-			for _, language in ipairs({ "python", "go", "javascript", "rust" }) do
+			for _, language in ipairs({ "python", "go", "javascript", "rust", "swift" }) do
 				require("kian.dap." .. language).setup(dap)
 			end
 

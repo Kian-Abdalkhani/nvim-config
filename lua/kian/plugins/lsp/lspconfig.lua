@@ -42,6 +42,7 @@ return {
 			"tailwindcss",
 			"emmet_language_server",
 			"sqls",
+			"sourcekit",
 		}
 		for _, server in ipairs(servers) do
 			local config = require("kian.lsp.servers." .. server)

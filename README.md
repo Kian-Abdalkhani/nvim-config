@@ -64,6 +64,87 @@ unchanged. LuaCheck remains installed and managed through Mason.
 The repository's `.luacheckrc` selects LuaJIT and recognizes Neovim's `vim` global;
 other Lua projects retain their own LuaCheck settings.
 
+## Swift
+
+Install a Swift 6 toolchain for package development. On macOS the Apple
+developer tools supply SourceKit-LSP, the formatter, and the LLDB debug adapter.
+On Linux and Windows, Neovim looks for `swift`, `sourcekit-lsp`, `swift-format`
+and `lldb-dap` on its `PATH`. On Windows, install the Visual Studio C++ tools
+and Windows SDK required by Swift. See the Swift installation instructions for
+[Windows](https://www.swift.org/install/windows/) or [Linux](https://www.swift.org/install/linux/).
+Open a Swift file to use SourceKit-LSP, Blink completion and Tree-sitter.
+Use `gd` for a definition, `gr` for references and `K` for documentation.
+Conform runs the toolchain's `swift-format` on save and respects the
+project's `.swift-format`. To enable style diagnostics, install SwiftLint
+on your `PATH` (`brew install swiftlint` on macOS) and add a `.swiftlint.yml`
+to the project. [SwiftLint releases](https://github.com/realm/SwiftLint/releases)
+SwiftLint checks the saved file on open and save using its nearest configuration.
+
+### Packages and scripts
+
+SwiftPM commands find the project from the current file, even when Neovim
+started elsewhere. A nested package uses its own manifest. A nested Xcode app
+uses the Xcode commands below. When the manifest and Xcode project share a
+directory, the `:Swift…` commands operate on the package.
+
+| Command | Action |
+| --- | --- |
+| `:SwiftBuild` | Build the package. |
+| `:SwiftRun [product]` | Run an executable in a terminal, or run a saved standalone script. |
+| `:SwiftTest [filter]` | Run all package tests or pass a regular expression to `swift test --filter`. |
+| `:SwiftDebug [product]` | Build an executable in Debug configuration and launch it in the DAP UI. |
+
+When a package has several executables, running or debugging without a name
+opens a picker. Use the SwiftPM product name on every platform, for example
+`:SwiftDebug MyCLI`. Neovim adds the executable's `.exe` suffix on Windows.
+For a library, use `:SwiftTest`. With full Xcode selected on macOS,
+SwiftPM runs both Swift Testing and XCTest suites. In a terminal at the package
+root, `swift test list` lists test identifiers. On toolchains that offer
+`--debugger`, use `swift test --debugger --filter MyTest` to run a matching
+test in LLDB. Use `<leader>db` to set a breakpoint before `:SwiftDebug`, and
+`<leader>dc` to continue.
+
+### macOS apps and the iOS Simulator
+
+1. Install full Xcode, open it to complete first launch, and install an iOS
+   Simulator runtime in **Xcode → Settings → Components**. If the Mac uses
+   Command Line Tools, the first Xcode command in Neovim selects
+   `/Applications/Xcode.app` for that editor session. Package-only sessions
+   use the active toolchain. To select a particular Xcode from startup, use
+   `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer nvim`. To make
+   Xcode the default for all terminal commands, select it in **Xcode →
+   Settings → Locations → Command Line Tools**.
+2. Install the Xcode build server and log formatter with
+   `brew install xcode-build-server xcbeautify`. Start Neovim in the app root
+   and run `:XcodebuildSetup`. Select the workspace or project, scheme,
+   Mac or simulator destination, and test plan. Use the Debug build configuration
+   for the scheme’s Run and Test actions in Xcode.
+3. Run `:XcodebuildBuild` once. The build server uses the selected scheme's
+   build log for SDK imports, conditional compilation, and cross-file
+   navigation. Setup and scheme changes generate a machine-specific
+   `buildServer.json` at the app root. Keep this file local to the checkout.
+   The plugin stores its other settings and logs in Neovim's data directory.
+4. Use `:XcodebuildBuildRun` to launch, `:XcodebuildBuildDebug` to hit
+   breakpoints, `:XcodebuildTestNearest` for the test under the cursor, and
+   `:XcodebuildTest` for the full test plan. `:XcodebuildPicker` lists other
+   actions. Open the project in Xcode to use the SwiftUI preview canvas.
+
+If app navigation shows a missing module after a scheme change, rebuild the
+selected scheme and restart SourceKit with `:lsp restart sourcekit`.
+If the build-server file is missing, run
+`xcode-build-server config -workspace MyApp.xcworkspace -scheme MyApp` at
+the app root. Use `-project MyApp.xcodeproj` for a standalone Xcode project.
+[Build-server setup](https://github.com/SolaWing/xcode-build-server#bind-to-xcode)
+and [Xcodebuild commands](https://github.com/wojciech-kulik/xcodebuild.nvim/wiki/User-Commands).
+
+If an installed simulator is missing from the destination picker, compare
+`xcrun simctl runtime list` with `xcrun simctl list runtimes`. If the first
+lists a ready image and the second is empty, run
+`xcrun simctl runtime scan-and-mount` and refresh the device picker.
+For scratch Xcode apps, use your usual projects directory. On macOS, Xcode
+and Neovim can record different paths for the same source under `/tmp`,
+preventing breakpoint and nearest-test matching.
+
 ## Markdown
 
 Opening a Markdown file automatically enables
@@ -328,3 +409,14 @@ navigation. They use temporary fixtures and disable plugin installation and
 update checks. Go linting checks use the managed golangci-lint 2.x and disable
 network downloads. The SQL checks are documented under
 [offline schema indexing](#verify-offline-schema-indexing).
+
+For Swift, run these checks from the same directory. The editing check uses
+SwiftLint and SourceKit-LSP, and the package check builds temporary executables
+and runs tests. The Xcode integration check runs on macOS.
+
+```sh
+nvim --headless -u NONE -i NONE -n -l tests/swift_editing.lua
+nvim --headless -u NONE -i NONE -l tests/swift_packages.lua
+nvim --headless -u NONE -i NONE -l tests/swift_dap.lua
+nvim --headless -u NONE -i NONE -l tests/swift_xcode.lua
+```

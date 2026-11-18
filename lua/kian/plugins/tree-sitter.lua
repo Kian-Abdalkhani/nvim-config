@@ -36,6 +36,7 @@ return {
 			"html",
 			"css",
 			"rust",
+			"swift",
 		}
 		local already_installed = require("nvim-treesitter.config").get_installed()
 		local to_install = vim.iter(ensure_installed)
